@@ -21,6 +21,9 @@ import os, json
 # 读取启动环境
 environment = e.read()
 
+# 修改 序列化方式
+# Flask.json_encoder = AlchemyJsonEncoder
+
 # 创建 Flask app
 app = Flask(__name__)
 

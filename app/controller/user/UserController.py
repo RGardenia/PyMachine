@@ -1,10 +1,14 @@
 from app import app
 from app.controller.BaseController import BaseController
 from app.common.Utils import Utils
+from app.filter.JsonFilter import AlchemyJsonEncoder
 from app.model.Models import SysUser
+from app.model.Vo.Schema import SysUserSchema
+from flask import json
 from flask import request
 import os, base64
 
+schmea = SysUserSchema()
 
 @app.route("/insertteacher", methods=["POST", "GET"])
 def Insert():
@@ -25,4 +29,6 @@ def Select():
     # mysqltools = UserService()
     # mysqlresult = mysqltools.select()
     mysqlresult = SysUser.query.all()
-    return mysqlresult
+
+    res = schmea.dump(mysqlresult, many=True)
+    return res

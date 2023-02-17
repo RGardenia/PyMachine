@@ -23,6 +23,16 @@ class SysUser(db.Model):
     create_time = Column(Date)
     user_identity = Column(Integer)
 
+    def toJson(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "password": self.password,
+            "realname": self.realname,
+            "create_time": self.create_time,
+            "user_identity": self.user_identity,
+            "del_flag": self.del_flag
+        }
 
 class SysLog(db.Model):
     __tablename__ = 'sys_log'
@@ -35,7 +45,7 @@ class SysLog(db.Model):
     username = Column(String(199))
     create_time = Column(Date)
 
-    def to_json(self):
+    def toJson(self):
         return {
             "id": self.id,
             "log_type": self.log_type,
