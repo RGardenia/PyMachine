@@ -1,9 +1,9 @@
-from app import app
-from app.controller.BaseController import BaseController
+from app.controller.base.BaseController import BaseController
 from app.common.Utils import Utils
 from app.filter.JsonFilter import AlchemyJsonEncoder
 from app.model.Models import SysUser
 from app.model.Vo.Schema import SysUserSchema
+from manager import app
 from flask import json
 from flask import request
 import os, base64

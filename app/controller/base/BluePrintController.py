@@ -3,7 +3,7 @@
 *引入后不用考虑 Controller 方法重名等问题
 """
 from flask import Blueprint
-from app.controller.BaseController import BaseController
+from app.controller.base.BaseController import BaseController
 
 admin = Blueprint('admin', __name__)
 

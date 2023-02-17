@@ -1,5 +1,4 @@
-from app.model.Models import HtLog
-from app import dBSession
+from app.utils.DateBase import dBSession
 import time
 
 
@@ -23,10 +22,10 @@ class LogService:
             'create_time': int(time.time())
         }
         try:
-            log = HtLog(**data)
-            dBSession.add(log)
+            # log = HtLog(**data)
+            # dBSession.add(log)
             dBSession.flush()
-            id = log.id
+            # id = log.id
             dBSession.commit()
             return id
         except  Exception as e:

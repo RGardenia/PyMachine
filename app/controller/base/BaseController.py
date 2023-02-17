@@ -1,7 +1,6 @@
 from app.config.env import Config
-from app.service.LogService import LogService
+from app.service.log.LogService import LogService
 from app.common.Code import Code
-from app.common.Log import log
 from app.common.Utils import Utils
 from flask import request, jsonify
 # import cerberus
@@ -64,10 +63,10 @@ class BaseController:
                 'PARAMETERS': request.args,
                 'RESPONSES': body
             }
-            if Config.SAVE_LOG == 1:
-                log().debug(data)
-            elif Config.SAVE_LOG == 2:
-                LogService().add(json.dumps(data), 1, 2)
+            # if Config.SAVE_LOG == 1:
+            #     log().debug(data)
+            # elif Config.SAVE_LOG == 2:
+            #     LogService().add(json.dumps(data), 1, 2)
             body['debug_id'] = debug_id
         return jsonify(body)
 

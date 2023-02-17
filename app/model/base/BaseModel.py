@@ -1,6 +1,6 @@
 from app.common.Code import Code
 from sqlalchemy import desc, asc
-from app import dBSession
+from app.utils.DateBase import dBSession
 import math
 
 

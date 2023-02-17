@@ -17,6 +17,7 @@ class Config(object):
 
     # 构建项目所在的 绝对路径，也就是 day08 的绝对路径
     BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     # debug
     # DEBUG = True  # 调试模式
