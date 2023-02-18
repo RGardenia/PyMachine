@@ -34,6 +34,7 @@ class SysUser(db.Model):
             "del_flag": self.del_flag
         }
 
+
 class SysLog(db.Model):
     __tablename__ = 'sys_log'
 
@@ -45,13 +46,19 @@ class SysLog(db.Model):
     username = Column(String(199))
     create_time = Column(Date)
 
-    def toJson(self):
-        return {
-            "id": self.id,
-            "log_type": self.log_type,
-            "log_content": self.log_content,
-            "operate_type": self.operate_type
-        }
+
+class MlPic(db.Model):
+    __tablename__ = 'ml_pic'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(110))
+    pic_url = Column(String(200))
+    label = Column(String(50))
+    rel_path = Column(String(100))
+    nginx_port = Column(Integer)
+    pic_byte = Column(String(199))
+    create_time = Column(Date)
+    create_by = Column(String(60))
 
 
 class HtLog(Base):

@@ -1,6 +1,5 @@
 """
-*蓝图-后台
-*引入后不用考虑 Controller 方法重名等问题
+* 蓝图-后台
 """
 from flask import Blueprint
 from app.controller.base.BaseController import BaseController
