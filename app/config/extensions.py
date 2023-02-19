@@ -6,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jsonrpc import JSONRPC
 from flask_migrate import Migrate
 from flask_cors import CORS
+
+
 # 权限模块 https://github.com/raddevon/flask-permissions
 # from flask_permissions.core import Permissions
 # from flask_jwt_extended import JWTManager
@@ -49,6 +51,7 @@ cors = CORS()
 def config_extensions(app):
     from app.utils.DateBase import init_datebase
     from app.utils.BluePrint import init_blueprint
+    from app.utils.upload import init_uploads
     from app.config.env import Config
     """ app 初始化时，传入 app 参数，挂载到 app """
     # 项目根目录
@@ -72,6 +75,9 @@ def config_extensions(app):
 
     # 数据转换器的初始化
     ma.init_app(app)
+
+    # 注册 上传实例
+    init_uploads(app)
 
     # 日志初始化
     # app.log = log.init_app(app)

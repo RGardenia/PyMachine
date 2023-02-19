@@ -15,8 +15,8 @@ class Config(object):
     DATABASE_NAME = 'cnn_model'
     DATABASE_TABLE_USER = 'user'
 
-    # 构建项目所在的 绝对路径，也就是 day08 的绝对路径
-    BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    # 构建项目所在的 绝对路径
+    BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
     # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     # debug
@@ -25,14 +25,14 @@ class Config(object):
 
     # log save 1 为文件形式，2为数据库形式，默认数据库
     SAVE_LOG = 1
+
     # upload
-    UPLOAD_FOLDER = '/opt/uploads/'  # 允许目录
+    # UPLOAD_FOLDER = '/opt/uploads/'               # Linux 允许目录
+    UPLOAD_FOLDER = os.path.join(BASE_DIR, 'lib')   # Windows 允许目录
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 允许大小16MB
     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])  # 允许文件
-    # 自定义的 图片上传路径
-    MEDIA_ROOT = os.path.join(BASE_DIR, UPLOAD_FOLDER, 'media/')
     # 静态资源存放路径
-    STATIC_ROOT = os.path.join(BASE_DIR, UPLOAD_FOLDER, 'static/')
+    STATIC_ROOT = os.path.join(UPLOAD_FOLDER, 'static')
 
     # jwt
     SECRET_KEY = '7PXsHcHGfa4e3kEs8Rvcv8ymjI0UeauX'

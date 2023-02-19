@@ -1,10 +1,27 @@
-''' author:hua
-    date:2018.5.9
+'''
     工具类，封装一些通用方法 
 '''
+from sqlalchemy import DateTime
+
 from app.config.env import Config
 from app.common.Code import Code
-import time
+import time, json, datetime, array
+
+
+class DataEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, DateTime):
+            return obj.strftime("%Y-%m-%d %H:%M:%S")
+        if isinstance(obj, bytes):
+            return str(obj, encoding='utf-8')
+        if isinstance(obj, int):
+            return int(obj)
+        elif isinstance(obj, float):
+            return float(obj)
+        # elif isinstance(obj, array):
+        #     return obj.tolist()
+        else:
+            return super(DataEncoder, self).default(obj)
 
 
 class Utils:
@@ -13,6 +30,7 @@ class Utils:
     * @param list data
     * @return dict
     '''
+
     @staticmethod
     def db_l_to_d(data):
         data_list = []
@@ -28,6 +46,7 @@ class Utils:
     * @param object obj
     * @return dict
     '''
+
     @staticmethod
     def class_to_dict(obj):
         '''把对象(支持单个对象、list、set)转换成字典'''
@@ -50,6 +69,7 @@ class Utils:
         @param string filename
         return string path
     """
+
     @staticmethod
     def allowed_file(filename):
         return '.' in filename and \
@@ -58,6 +78,7 @@ class Utils:
     """ uuid,唯一id 
         return string id
     """
+
     @staticmethod
     def unique_id(prefix=''):
         return prefix + hex(int(time.time()))[2:10] + hex(int(time.time() * 1000000) % 0x100000)[2:7]
@@ -65,6 +86,7 @@ class Utils:
     """ 确保 文件夹存在
         return bool
     """
+
     @staticmethod
     def makeSurePath(strPath):
         import os

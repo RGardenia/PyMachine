@@ -1,5 +1,8 @@
+import json
+
 from flask import Response, jsonify
 from app.common.Code import Code
+from app.common.Utils import DataEncoder
 
 
 class Result(Response):
@@ -21,12 +24,12 @@ class Result(Response):
 
 def success_api(data=None, code: int = Code.SUCCESS, msg: str = "成功！"):
     """ 成功响应 默认值“成功” """
-    return {"code": code, "success": True, "msg": msg, "date": data}
+    return {"code": code, "success": True, "msg": msg, "data": data}
 
 
 def fail_api(data=None, code: int = Code.ERROR, msg: str = "失败！"):
     """ 失败响应 默认值“失败” """
-    return {"code": code, "success": False, "msg": msg, "date": data}
+    return {"code": code, "success": False, "msg": msg, "data": data}
 
 
 def table_api(msg: str = "", count=0, data=None, limit=10):
@@ -34,7 +37,7 @@ def table_api(msg: str = "", count=0, data=None, limit=10):
     res = {
         'msg': msg,
         'code': 0,
-        'data': data,
+        'data': jsonify(data),
         'count': count,
         'limit': limit
     }

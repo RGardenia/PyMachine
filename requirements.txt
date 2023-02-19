@@ -1,3 +1,5 @@
 Flask==2.2.2
 PyMySQL==1.0.2
 SQLAlchemy==1.4.46
+marshmallow~=3.19.0
+Werkzeug~=2.2.2

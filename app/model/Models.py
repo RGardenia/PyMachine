@@ -1,5 +1,5 @@
 # coding: utf-8
-from sqlalchemy import Column, Integer, String, Text, Date
+from sqlalchemy import Column, Integer, String, Text, DateTime
 from sqlalchemy.schema import FetchedValue
 from sqlalchemy.ext.declarative import declarative_base
 from app.config.extensions import db
@@ -17,10 +17,10 @@ class SysUser(db.Model):
     password = Column(String(199), nullable=False)
     salt = Column(String(45))
     avatar = Column(String(199))
-    birthday = Column(Date)
+    birthday = Column(DateTime)
     sex = Column(Integer)
     del_flag = Column(Integer)
-    create_time = Column(Date)
+    create_time = Column(DateTime)
     user_identity = Column(Integer)
 
     def toJson(self):
@@ -44,7 +44,18 @@ class SysLog(db.Model):
     operate_type = Column(Integer)
     userid = Column(String(199))
     username = Column(String(199))
-    create_time = Column(Date)
+    create_time = Column(DateTime)
+
+    def toJson(self):
+        return {
+            "id": self.id,
+            "log_type": self.log_type,
+            "log_content": self.log_content,
+            "operate_type": self.operate_type,
+            "userid": self.userid,
+            "username": self.username,
+            "create_time": self.create_time,
+        }
 
 
 class MlPic(db.Model):
@@ -57,8 +68,21 @@ class MlPic(db.Model):
     rel_path = Column(String(100))
     nginx_port = Column(Integer)
     pic_byte = Column(String(199))
-    create_time = Column(Date)
+    create_time = Column(DateTime)
     create_by = Column(String(60))
+
+    def toJson(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "pic_url": self.pic_url,
+            "label": self.label,
+            "rel_path": self.rel_path,
+            "nginx_port": self.nginx_port,
+            "pic_byte": self.pic_byte,
+            "create_time": self.create_time,
+            "create_by": self.create_by,
+        }
 
 
 class HtLog(Base):

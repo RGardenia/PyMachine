@@ -12,14 +12,11 @@ DBSession = sessionmaker(bind=engine)
 
 dBSession = scoped_session(DBSession)
 
+
 def init_datebase(app):
     # 配置 sqlalchemy  数据库驱动://数据库用户名:密码@主机地址:端口/数据库?编码
     app.config['SQLALCHEMY_DATABASE_URI'] = Config.SQLALCHEMY_DATABASE_URI
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = Config.SQLALCHEMY_TRACK_MODIFICATIONS
-    # 上传文件配置
-    app.config['UPLOAD_FOLDER'] = Config.UPLOAD_FOLDER  # 上传目录
-    app.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH  # 上传大小
-
 
     @app.teardown_appcontext
     def shutdown_session(exception=None):
