@@ -31,7 +31,7 @@ class MlPicSchema(Schema):
     pic_url = fields.String()
     label = fields.String()
     rel_path = fields.String()
-    nginx_port = fields.Integer()
+    del_flag = fields.Integer()
     pic_byte = fields.String()
     create_time = fields.Date()
     create_by = fields.String()

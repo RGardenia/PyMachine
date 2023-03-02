@@ -66,7 +66,7 @@ class MlPic(db.Model):
     pic_url = Column(String(200))
     label = Column(String(50))
     rel_path = Column(String(100))
-    nginx_port = Column(Integer)
+    del_flag = Column(Integer)
     pic_byte = Column(String(199))
     create_time = Column(DateTime)
     create_by = Column(String(60))
@@ -78,7 +78,7 @@ class MlPic(db.Model):
             "pic_url": self.pic_url,
             "label": self.label,
             "rel_path": self.rel_path,
-            "nginx_port": self.nginx_port,
+            "del_flag": self.del_flag,
             "pic_byte": self.pic_byte,
             "create_time": self.create_time,
             "create_by": self.create_by,

@@ -75,3 +75,52 @@ if __name__ == "__main__":
     Base.metadata.create_all(engine)
     # 删除表
     # Base.metadata.drop_all(engine)
+
+    # 创建数据表
+    # db.create.all()
+
+    # 模型类.属性.startswith()    #以什么开头的数据
+    # 模型类.属性.endswith()    #以什么结尾的数据
+    # 模型类.属性.contains()    #数据包含什么什么
+    # User.query.filter(User.phone.endswith('3000')).first()  # 获取手机尾号为3000的数据
+    # User.query.filter(User.name != 'huan').all()  # 获取用户名不是huan的所有数据
+    #
+    # 字段为整型或日期类型时，还可以使用以下代码：
+    # 模型类.属性.__lt__(18)  # 小于18
+    # 模型类.属性.__gt__(18)  # 大于18
+    # 模型类.属性.__ge__(18)  # 大于等于18
+    # 模型类.属性.__le__(18)  # 小于等于18
+    # 模型类.属性.between(18，30)  # 18到30之间
+
+    # User.query.limit(2).all()  # 获取所有数据中前两条数据
+    # User.query.offset(2).limit(2).all()  # 跳过所有数据中前两条数据再获取跳过后的前两条数据
+
+    # # 导入and方法，实现逻辑与查询
+    # from sqlalchemy import and_
+    #
+    # User.query.filter(and_(User.name != 'huan', User.phone.endswith('3000'))).all()  # 获取用户名不是huan以及手机尾号为3000
+    #
+    # # 导入or方法，实现逻辑或查询
+    # from sqlalchemy import or_
+    #
+    # User.query.filter(or_(User.name != 'huan', User.email.endswith('3000'))).all()  # 获取用户名不是huan或手机尾号为3000
+    #
+    # # 导入not，实现取反查询
+    # from sqlalchemy import not_
+    #
+    # User.query.filter(not_(User.name == 'huan')).all()  # 获取用户名不是huan的所有数据
+
+    # 模型类.query.order_by(参数)
+    # User.query.order_by(User.id).all  # 对所有的id进行排序
+
+    # 修改数据
+    # user = User.query.first()  # 选定要修改的数据
+    # user.username = 'xiu'  # 要修改的参数值
+    # db.session.commit()  # 提交事务
+
+    # 删除数据
+    # user = User.query.first()
+    # db.session.delete(user)
+    # db.session.commit()
+
+    # db.drop_all()

@@ -2,7 +2,6 @@ import json
 
 from flask import Response, jsonify
 from app.common.Code import Code
-from app.common.Utils import DataEncoder
 
 
 class Result(Response):

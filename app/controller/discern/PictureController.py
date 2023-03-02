@@ -1,13 +1,9 @@
-import os, base64, uuid, random, string, secrets
-from app.controller.base.BaseController import BaseController
+import os, base64, uuid, random, string, secrets, datetime
 from app.common.Result import Result, success_api, fail_api
 from app.model.Vo.Schema import SysUserSchema, MlPicSchema
-from app.filter.JsonFilter import AlchemyJsonEncoder
 from app.service.discern.PhotoService import PhotoService
 from flask import json, Blueprint, request
 from werkzeug.utils import secure_filename
-from app.config.extensions import jsonrpc
-from app.common.Utils import Utils
 from app.config.env import Config
 from manager import app
 
@@ -22,24 +18,33 @@ def Select():
     return success_api(data=PhotoService().selectAll())
 
 
-@pic.route('/upload', methods=['POST', 'GET'])
+@pic.route('/upload', methods=['POST'])
 def upload_pic():
-    if request.method == 'POST':
-        # 获取请求体中的数据
-        pic = request.files['the_file']
+    # 获取请求体中的数据
+    picture = request.files['the_file']
 
-        # 保存 图片 数据
-        save_path = Config.UPLOAD_FOLDER + '\\' + secure_filename(pic.filename)
-        # pic.save(save_path)
+    # 保存 图片 数据
+    save_path = Config.UPLOAD_FOLDER + '\\' + secure_filename(picture.filename)
+    picture.save(save_path)
 
-        # TODO 生成随机 唯一字符串
-        # byte = uuid.uuid1()
-        num = 19
-        byte = ''.join(secrets.choice(string.ascii_letters + string.digits) for x in range(num))
+    # TODO 生成随机 唯一字符串
+    # byte = uuid.uuid1()
+    num = 19
+    byte = ''.join(secrets.choice(string.ascii_letters + string.digits) for x in range(num))
 
-        pic_data = {"name": secure_filename(pic.filename),
-                    "pic_url": save_path,
-                    "pic_byte": str(byte)}
-        data = PhotoService().Insert(pic_data=pic_data)
-        return success_api(data=data)
-    return fail_api(msg="请求方式不正确！")
+    pic_data = {"name": secure_filename(picture.filename),
+                "pic_url": save_path,
+                "pic_byte": str(byte),
+                "create_time": datetime.date.today()}
+    data = PhotoService().Insert(pic_data=pic_data)
+    return success_api(data=data)
+
+
+@pic.route("/delete", methods=["post"])
+def Delete():
+    pic_byte = request.args.get('pic_byte')
+    if PhotoService().delete(pic_byte):
+        return success_api()
+    else:
+        return fail_api()
+
