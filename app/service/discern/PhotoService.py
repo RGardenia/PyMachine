@@ -19,14 +19,13 @@ class PhotoService():
     # 插入数据
     def Insert(self, pic_data):
         # TODO 调用 模型 预测
-        label = 'TODO'
 
         picture = MlPic(
             name=pic_data["name"],
             pic_url=pic_data["pic_url"],
             pic_byte=pic_data["pic_byte"],
             del_flag=0,
-            label=label
+            label=pic_data["label"]
         )
 
         # 保存数据至 数据库

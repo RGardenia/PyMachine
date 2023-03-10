@@ -5,6 +5,7 @@ from app.service.discern.PhotoService import PhotoService
 from flask import json, Blueprint, request
 from werkzeug.utils import secure_filename
 from app.config.env import Config
+from app.common.Utils import Utils
 from manager import app
 
 schmea = MlPicSchema()
@@ -27,6 +28,9 @@ def upload_pic():
     save_path = Config.UPLOAD_FOLDER + '\\' + secure_filename(picture.filename)
     picture.save(save_path)
 
+    # TODO 模型 预测 类别
+    label = Utils.withModel(save_path)
+
     # TODO 生成随机 唯一字符串
     # byte = uuid.uuid1()
     num = 19
@@ -35,7 +39,8 @@ def upload_pic():
     pic_data = {"name": secure_filename(picture.filename),
                 "pic_url": save_path,
                 "pic_byte": str(byte),
-                "create_time": datetime.date.today()}
+                "create_time": datetime.date.today(),
+                "label": label}
     data = PhotoService().Insert(pic_data=pic_data)
     return success_api(data=data)
 

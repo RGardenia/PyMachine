@@ -10,6 +10,7 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+import os
 
 
 class Utils:
@@ -17,10 +18,11 @@ class Utils:
     @staticmethod
     def withModel(pic_path):
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-        idx_to_labels = np.load('idx_to_labels.npy', allow_pickle=True).item()
+        idx_to_labels = np.load(os.path.join(Config.BASE_DIR, 'dataset') + '\\idx_to_labels.npy',
+                                allow_pickle=True).item()
 
         # 载入最佳模型作为当前模型
-        model = torch.load('checkpoints/best-0.885.pth')
+        model = torch.load(os.path.join(Config.BASE_DIR, 'checkpoints') + '\\best-0.885.pth')
         model = model.eval().to(device)
         from torchvision import transforms
 
@@ -37,12 +39,21 @@ class Utils:
         img_pil = Image.open(img_path)
 
         input_img = test_transform(img_pil)  # 预处理
-
         input_img = input_img.unsqueeze(0).to(device)
+        labelList = list(idx_to_labels.values())
+
         # 执行前向预测，得到所有类别的 logit 预测分数
         pred_logits = model(input_img)
+        pred_softmax = F.softmax(pred_logits, dim=1)  # 对 logit 分数做 softmax 运算
+        top_n = pred_softmax.cpu().detach().numpy()[0] * 100
 
+        result = np.array(top_n, dtype='int')
 
+        res = np.argmax(result)
+        label = labelList[res]
+        print(label)
+
+        return label
 
     @staticmethod
     def dict_to_json(dict_obj):
