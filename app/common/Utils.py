@@ -6,10 +6,6 @@ import time, json, datetime, array
 from app.config.env import Config
 from app.common.Code import Code
 from sqlalchemy import DateTime
-import torch.nn.functional as F
-import matplotlib.pyplot as plt
-import numpy as np
-import torch
 import os
 
 
@@ -17,12 +13,17 @@ class Utils:
 
     @staticmethod
     def withModel(pic_path):
+        import torch.nn.functional as F
+        import numpy as np
+        import torch
+
+        model = 'resnet101-0.914.pth'
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         idx_to_labels = np.load(os.path.join(Config.BASE_DIR, 'dataset') + '\\idx_to_labels.npy',
                                 allow_pickle=True).item()
 
         # 载入最佳模型作为当前模型
-        model = torch.load(os.path.join(Config.BASE_DIR, 'checkpoints') + '\\best-0.885.pth')
+        model = torch.load(os.path.join(Config.BASE_DIR, 'checkpoints') + '\\' + model)
         model = model.eval().to(device)
         from torchvision import transforms
 
@@ -40,7 +41,7 @@ class Utils:
 
         input_img = test_transform(img_pil)  # 预处理
         input_img = input_img.unsqueeze(0).to(device)
-        labelList = list(idx_to_labels.values())
+        labelList = list(idx_to_labels.values())  # 获取 类别列表
 
         # 执行前向预测，得到所有类别的 logit 预测分数
         pred_logits = model(input_img)
